@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ReviewGuard - Fake Review Detection</title>
+  
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">🔘 ReviewGuard</div>
+    <ul class="nav-links">
+      <li>Dashboard</li>
+      <li>Reviewer Analysis</li>
+      <li>Time Burst Alerts</li>
+      <li>Trust Scoring</li>
+    </ul>
+    <div class="profile-icon">
+      <div class="avatar-circle">U</div>
+    </div>
+  </nav>
+
+  <main class="main-container">
+    <h1>Fake Review Detection Dashboard</h1>
+
+    <div class="input-section">
+      <input type="text" id="reviewInput" placeholder="Enter your product review" />
+      <button onclick="predictReview()">Check</button>
+    </div>
+
+    <div class="result-box">
+      <h3>Prediction: <span id="predictionResult">...</span></h3>
+    </div>
+    <!-- <input id="reviewInput" placeholder="Enter your review here" />
+<button onclick="checkReview()">Check Review</button>
+
+<h3 id="output"></h3>
+<div id="lime-visuals"></div> -->
+
+    <section class="analytics">
+      <h2>Analytics</h2>
+      <p>Analytics and trust scoring will appear here.</p>
+    </section>
+  </main>
+
+  <script>
+    function predictReview() {
+      const input = document.getElementById("reviewInput").value;
+      fetch("/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ review: input })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("predictionResult").textContent = data.prediction;
+      })
+      .catch(err => {
+        document.getElementById("predictionResult").textContent = "Error";
+      });
+    }
+  </script>
+</body>
+</html> 
