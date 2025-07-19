@@ -33,4 +33,4 @@ df.rename(columns={'reviews.text': 'review'}, inplace=True)
 
 # Save cleaned dataset
 df.to_csv("dataset/fake_reviews.csv", index=False)
-print(f"✅ Saved {df.shape[0]} labeled reviews to 'dataset/fake_reviews.csv'")
+print(f" Saved {df.shape[0]} labeled reviews to 'dataset/fake_reviews.csv'")
