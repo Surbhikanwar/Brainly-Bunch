@@ -47,5 +47,5 @@ if __name__ == "__main__":
         print("No genuine-looking reviews found.")
     else:
         summary = summarize_reviews(genuine_reviews)
-        print("\n📋 Summary of Genuine Reviews:")
+        print("\nSummary of Genuine Reviews:")
         print(summary)
