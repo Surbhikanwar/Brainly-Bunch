@@ -11,7 +11,7 @@ with open("model/honesta_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 # Streamlit UI
-st.set_page_config(page_title="Honesta - Review Detector", page_icon="🧐")
+st.set_page_config(page_title="Honesta - Review Detector", page_icon="")
 st.title("Honesta: Fake Review Detection")
 
 # Input box
