@@ -1,4 +1,4 @@
-console.log("✅ ReviewGuard content script loaded");
+console.log("ReviewGuard content script loaded");
 
 const reviews = document.querySelectorAll("[data-hook='review']");
 
@@ -35,7 +35,7 @@ reviews.forEach(async (reviewDiv) => {
     // Generate short explanation string
     if (result.prediction === "Suspicious") {
       if (result.flags?.length) {
-        explanation.textContent = "🚩 " + result.flags.join(", ");
+        explanation.textContent = " " + result.flags.join(", ");
       } else {
         explanation.textContent = "This review has suspicious behavior patterns.";
       }
