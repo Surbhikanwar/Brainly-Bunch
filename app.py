@@ -5,6 +5,11 @@ from lime.lime_text import LimeTextExplainer
 app = Flask(__name__)
 from flask_cors import CORS
 CORS(app)
+import joblib
+
+
+model = joblib.load("model.pkl")
+vectorizer = joblib.load("spam_model.pkl")
 
 
 
