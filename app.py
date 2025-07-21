@@ -1,32 +1,24 @@
-from flask import Flask, request, jsonify, render_template
-import pickle
+from flask import Flask, request, jsonify
 from lime.lime_text import LimeTextExplainer
+from flask_cors import CORS
+import joblib
+import pickle
 
 app = Flask(__name__)
-from flask_cors import CORS
 CORS(app)
-import joblib
-
-
-model = joblib.load("model.pkl")
-vectorizer = joblib.load("spam_model.pkl")
-
-
 
 # Load model and vectorizer
-with open("model.pkl", "rb") as f:
-    model = pickle.load(f)
+model = joblib.load("models/model.pkl")
+vectorizer = joblib.load("models/vectorizer.pkl")
 
-with open("vectorizer.pkl", "rb") as f:
-    vectorizer = pickle.load(f)
-
+# LIME needs a probability function
 def predict_proba_wrapper(texts):
     vec = vectorizer.transform(texts)
     return model.predict_proba(vec)
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return jsonify({"message": "Fake Review Detection API is running."})
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -37,10 +29,10 @@ def predict():
         # Predict
         review_vec = vectorizer.transform([review])
         prediction = model.predict(review_vec)[0]
-        label = "Suspicious" if prediction == 1 else "Genuine"
+        label = "Suspicious" if prediction == "fake" else "Genuine"
 
         # Explain with LIME
-        explainer = LimeTextExplainer(class_names=["Genuine", "Suspicious"])
+        explainer = LimeTextExplainer(class_names=["fake", "genuine"])
         exp = explainer.explain_instance(review, predict_proba_wrapper, num_features=5)
         explanation = [{"word": word, "score": score} for word, score in exp.as_list()]
 
@@ -54,5 +46,4 @@ def predict():
         return jsonify({"prediction": "Error", "error": str(e)}), 500
 
 if __name__ == "__main__":
-
     app.run(debug=True)

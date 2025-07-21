@@ -3,9 +3,15 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 import pickle
 import os
+import pandas as pd  # ✅ This line is required
+
+dataset_path = os.getenv("DATASET_PATH", "dataset/fake_reviews.csv")
+df = pd.read_csv(dataset_path)
+
+print(df.head())
 
 # Load dataset
-df = pd.read_csv("C:/Users/softm/Desktop/BRAINLY BRUNCH/dataset/fake_reviews.csv")
+# df = pd.read_csv("dataset/fake_reviews.csv")
 print("Available columns:", df.columns.tolist())
 
 # Try to automatically detect review and label columns
