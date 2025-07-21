@@ -3,7 +3,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 import pickle
 import os
-import pandas as pd  # ✅ This line is required
+import pandas as pd  # This line is required
 
 dataset_path = os.getenv("DATASET_PATH", "dataset/fake_reviews.csv")
 df = pd.read_csv(dataset_path)
@@ -44,4 +44,4 @@ with open("models/model.pkl", "wb") as f:
 with open("models/vectorizer.pkl", "wb") as f:
     pickle.dump(vectorizer, f)
 
-print("✅ Model and vectorizer saved to models/")
+print(" Model and vectorizer saved to models/")
