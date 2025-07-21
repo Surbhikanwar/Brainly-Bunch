@@ -3,7 +3,7 @@ function scanReviews() {
 
   reviews.forEach(async (reviewDiv) => {
     const text = reviewDiv.innerText.trim();
-    if (!text) return;
+    if (!text || reviewDiv.querySelector(".review-flag")) return;
 
     try {
       const response = await fetch("http://127.0.0.1:5000/predict", {
@@ -15,6 +15,7 @@ function scanReviews() {
       const result = await response.json();
 
       const tag = document.createElement("div");
+      tag.className = "review-flag";
       tag.innerText = `⚠️ ${result.prediction}`;
       tag.style.color = result.prediction === "Suspicious" ? "red" : "green";
       tag.style.fontWeight = "bold";
@@ -27,5 +28,5 @@ function scanReviews() {
 }
 
 window.addEventListener("load", () => {
-  setTimeout(scanReviews, 3000); // wait for reviews to render
+  setTimeout(scanReviews, 3000);
 });

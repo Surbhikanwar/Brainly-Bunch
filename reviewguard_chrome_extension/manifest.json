@@ -3,22 +3,27 @@
   "name": "ReviewGuard - Fake Review Checker",
   "version": "1.0",
   "description": "Detect fake reviews on Amazon and Flipkart using ML",
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["scripting", "activeTab"],
   "host_permissions": [
     "http://127.0.0.1:5000/*",
-    "*://*.amazon.in/*",
-    "*://*.flipkart.com/*"
+    "https://www.amazon.in/*",
+    "https://www.flipkart.com/*"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_title": "ReviewGuard"
   },
   "content_scripts": [
     {
-      "matches": ["*://*.amazon.in/*", "*://*.flipkart.com/*"],
-      "js": ["content.js"]
+      "matches": [
+        "https://www.amazon.in/*",
+        "https://www.flipkart.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
     }
   ]
 }
